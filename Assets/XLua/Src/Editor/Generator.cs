@@ -552,6 +552,8 @@ namespace CSObjectWrapEditor
 
             //指针目前不支持，先过滤
             if (mb.GetParameters().Any(pInfo => pInfo.ParameterType.IsPointer)) return true;
+            // bugfix for https://github.com/Tencent/xLua/issues/967
+            if (mb.GetParameters().Any(pInfo => pInfo.ParameterType.IsByRefLike)) return true;
             if (mb is MethodInfo && (mb as MethodInfo).ReturnType.IsPointer) return true;
 
             foreach (var filter in memberFilters)
